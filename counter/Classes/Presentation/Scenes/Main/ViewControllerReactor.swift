@@ -21,10 +21,7 @@ class ViewControllerReactor: Reactor {
     struct State {
         var counter: Int
     }
-    var initialState: ViewControllerReactor.State
-    init() {
-        initialState = State(counter: 0)
-    }
+    var initialState: ViewControllerReactor.State = State(counter: 0)
     
     func mutate(action: ViewControllerReactor.Action) -> Observable<ViewControllerReactor.Mutation> {
         switch action {
