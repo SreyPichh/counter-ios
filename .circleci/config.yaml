@@ -1,0 +1,37 @@
+# .circleci/config.yml
+version: 2
+jobs:
+  build-and-test:
+    macos:
+      xcode: "10.0"
+    working_directory: /Users/mackbookpro/Desktop/iosApp/counter-ios
+    environment:
+      FL_OUTPUT_DIR: output
+
+    steps:
+      - checkout
+      - run:
+          name: Fetch CocoaPods Specs
+          command: |
+            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+      - run:
+          name: Install CocoaPods
+          command: pod install --verbose
+
+      - run:
+          name: Build and run tests
+          command: fastlane scan
+          environment:
+            SCAN_DEVICE: iPhone XR
+            SCAN_SCHEME: counter
+
+      - store_test_results:
+          path: output/scan
+      - store_artifacts:
+          path: output
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build-and-test
