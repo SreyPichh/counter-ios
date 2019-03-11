@@ -49,6 +49,7 @@ playground.xcworkspace
 Pods/
 
 .DS_Store/
+.DS_Store
 
 # Carthage
 #
